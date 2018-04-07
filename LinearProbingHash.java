@@ -7,7 +7,7 @@
  * CS2050-003
  * 
  */
-public class LinearProbing
+public class LinearProbingHash
 {
     
 }
