@@ -7,17 +7,16 @@
  * CS2050-003
  * 
  */
-import java.io.*; 
 import java.util.Scanner; 
 
-public class LinearProbingHash
+public class InputGetter
 {
     Scanner keyboard; 
     
     /**
-     * 
+     * Constructor
      */
-    public LinearProbingHash(){
+    public InputGetter(){
         keyboard = new Scanner(System.in); 
     }
     
@@ -25,7 +24,7 @@ public class LinearProbingHash
     /**
      * Recieves input from the user via the keyboard
      */
-    private String getInput(){
+    public String takeInput(){
         String userText = ""; 
         try{
             userText = keyboard.nextLine(); 
