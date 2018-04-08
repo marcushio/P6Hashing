@@ -9,29 +9,133 @@
  */
 import java.io.*; 
 import java.util.Scanner; 
+import java.util.LinkedList; 
 
 public class LinearProbingHash
 {
-    Scanner keyboard; 
+    Timer timer; 
+    InputGetter keyboard; 
+    String filename; 
+    
+    Integer[] hashTable1; 
+    int size1 = 11000; 
+    int collisions1; 
+    int furthest1; 
+    
+    Integer[] hashTable2;
+    int size2 = 15707; 
+    int collisions2; 
+    int furthest2; 
+    
+    Integer[] hashTable3;
+    int size3 = 17111; 
+    int collisions3; 
+    int furthest3; 
+    
+    Integer[] hashTable4; 
+    int size4 = 25111; 
+    int collisions4; 
+    int furthest4; 
+
+    int totalCollisions; 
+    int furthest; 
+    String ls = System.lineSeparator(); 
     
     /**
      * 
      */
     public LinearProbingHash(){
-        keyboard = new Scanner(System.in); 
+        keyboard = new InputGetter(); 
+        timer = new Timer(); 
+        hashTable1 = new Integer[size1]; 
+        hashTable2 = new Integer[size2]; 
+        hashTable3 = new Integer[size3]; 
+        hashTable4 = new Integer[size4]; 
+        System.out.println("Enter a .txt filename you wish to hash"); 
+        filename = keyboard.takeInput(); 
     }
     
     
     /**
-     * Recieves input from the user via the keyboard
+     * Hash
      */
-    private String getInput(){
-        String userText = ""; 
+    private void hash(Integer[] hashTable, int size){
+        totalCollisions = 0; 
+        furthest = 0; 
         try{
-            userText = keyboard.nextLine(); 
-        } catch (Exception ex){
-            System.out.println("Couldn't get input"); 
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String docLine = null; 
+            
+            while((docLine = reader.readLine()) != null){
+                int key = Integer.parseInt(docLine); 
+                int hashCode = key % 1231; 
+                int keyCollisions = 0; 
+                while(hashTable[hashCode] != null){
+                    totalCollisions++; 
+                    keyCollisions++;
+                    hashCode++; 
+                    if(hashCode == size){
+                        hashCode = 0; 
+                    }
+                    if(keyCollisions > furthest){
+                        furthest = keyCollisions; 
+                    }
+                }   
+                hashTable[hashCode] = key; 
+            }
+        }catch(NumberFormatException ex){
+            System.out.println("Error: Non numeric characters"); 
+        }catch(IOException ex){
+            System.out.println("IO Error"); 
         }
-        return userText; 
+    }
+    
+    
+    /**
+     * 
+     */
+    public static void main(String[] args){
+        LinearProbingHash hash = new LinearProbingHash(); 
+        
+        try{
+            hash.timer.start(); 
+            hash.hash(hash.hashTable1, hash.size1); 
+            hash.timer.stop(); 
+            hash.collisions1 = hash.totalCollisions; 
+            hash.furthest1 = hash.furthest; 
+            System.out.println("Hash time 11000 " + hash.timer.reportTimes() + hash.ls); 
+            System.out.println("Collisions " + hash.collisions1 + hash.ls); 
+            System.out.println("furthest" + hash.furthest1 + hash.ls); 
+            
+            hash.timer.start(); 
+            hash.hash(hash.hashTable2, hash.size2); 
+            hash.timer.stop(); 
+            hash.collisions2 = hash.totalCollisions; 
+            hash.furthest2 = hash.furthest; 
+            System.out.println("Hash time 15707 " + hash.timer.reportTimes() + hash.ls); 
+            System.out.println("Collisions " + hash.collisions2 + hash.ls); 
+            System.out.println("furthest" + hash.furthest2 + hash.ls); 
+            
+            hash.timer.start(); 
+            hash.hash(hash.hashTable3, hash.size3); 
+            hash.timer.stop(); 
+            hash.collisions3 = hash.totalCollisions; 
+            hash.furthest3 = hash.furthest; 
+            System.out.println("Hash time 17111 " + hash.timer.reportTimes() + hash.ls); 
+            System.out.println("Collisions " + hash.collisions3 + hash.ls); 
+            System.out.println("furthest" + hash.furthest3 + hash.ls); 
+            
+            hash.timer.start(); 
+            hash.hash(hash.hashTable4, hash.size4); 
+            hash.timer.stop(); 
+            hash.collisions4 = hash.totalCollisions; 
+            hash.furthest4 = hash.furthest; 
+            System.out.println("Hash time 25111" + hash.timer.reportTimes() + hash.ls); 
+            System.out.println("Collisions " + hash.collisions4 + hash.ls); 
+            System.out.println("furthest" + hash.furthest4 + hash.ls); 
+            
+        }catch(Exception ex){
+            System.out.println("Exception occurred"); 
+        }
     }
 }
