@@ -1,0 +1,21 @@
+
+Results for size = 11000
+Time to Hash: 0.19635540 seconds CPU time    0.19700000 seconds clock time
+Collisions: 43869393
+Furthest Collision: 9964
+
+Results for size = 15707
+Time to Hash: 0.18287157 seconds CPU time    0.18200000 seconds clock time
+Collisions: 43869393
+Furthest Collision: 9964
+
+Results for size = 17111
+Time to Hash: 0.16139454 seconds CPU time    0.16100000 seconds clock time
+Collisions: 43869393
+Furthest Collision: 9964
+
+Results for size = 25111
+Time to Hash: 0.13701110 seconds CPU time    0.13800000 seconds clock time
+Collisions: 43869393
+Furthest Collision: 9964
+

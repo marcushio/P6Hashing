@@ -1,0 +1,24 @@
+Results for size = 11000
+Time to Hash: 0.01073762 seconds CPU time    0.01100000 seconds clock time
+Collisions: 8769
+Longest chain index: 898
+Longest chain length: 18
+
+Results for size = 15707
+Time to Hash: 0.00749384 seconds CPU time    0.00700000 seconds clock time
+Collisions: 8769
+Longest chain index: 898
+Longest chain length: 18
+
+Results for size = 17111
+Time to Hash: 0.00672273 seconds CPU time    0.00700000 seconds clock time
+Collisions: 8769
+Longest chain index: 898
+Longest chain length: 18
+
+Results for size = 25111
+Time to Hash: 0.00452897 seconds CPU time    0.00400000 seconds clock time
+Collisions: 8769
+Longest chain index: 898
+Longest chain length: 18
+

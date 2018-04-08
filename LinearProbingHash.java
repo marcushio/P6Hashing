@@ -15,7 +15,8 @@ public class LinearProbingHash
 {
     Timer timer; 
     InputGetter keyboard; 
-    String filename; 
+    String inputFilename; 
+    String outputFilename; 
     
     Integer[] hashTable1; 
     int size1 = 11000; 
@@ -52,7 +53,9 @@ public class LinearProbingHash
         hashTable3 = new Integer[size3]; 
         hashTable4 = new Integer[size4]; 
         System.out.println("Enter a .txt filename you wish to hash"); 
-        filename = keyboard.takeInput(); 
+        inputFilename = keyboard.takeInput(); 
+        System.out.println("Enter the name of the file you want to write results to"); 
+        outputFilename = keyboard.takeInput(); 
     }
     
     
@@ -63,7 +66,7 @@ public class LinearProbingHash
         totalCollisions = 0; 
         furthest = 0; 
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            BufferedReader reader = new BufferedReader(new FileReader(inputFilename));
             String docLine = null; 
             
             while((docLine = reader.readLine()) != null){
@@ -83,10 +86,24 @@ public class LinearProbingHash
                 }   
                 hashTable[hashCode] = key; 
             }
+            reader.close(); 
         }catch(NumberFormatException ex){
             System.out.println("Error: Non numeric characters"); 
         }catch(IOException ex){
             System.out.println("IO Error"); 
+        }
+    }
+    
+    
+    /**
+     * 
+     */
+    private void writeResults(String results){
+               
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outputFilename), true))){
+            writer.write(results); 
+        }catch(Exception ex){
+            System.out.println("couldn't write results"); 
         }
     }
     
@@ -106,6 +123,10 @@ public class LinearProbingHash
             System.out.println("Hash time 11000 " + hash.timer.reportTimes() + hash.ls); 
             System.out.println("Collisions " + hash.collisions1 + hash.ls); 
             System.out.println("furthest" + hash.furthest1 + hash.ls); 
+            hash.writeResults("Results for size = 11000" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls + 
+                              "Collisions: " + hash.collisions1 + hash.ls + 
+                              "Furthest Collision: " + hash.furthest1 + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable2, hash.size2); 
@@ -114,7 +135,11 @@ public class LinearProbingHash
             hash.furthest2 = hash.furthest; 
             System.out.println("Hash time 15707 " + hash.timer.reportTimes() + hash.ls); 
             System.out.println("Collisions " + hash.collisions2 + hash.ls); 
-            System.out.println("furthest" + hash.furthest2 + hash.ls); 
+            System.out.println("furthest" + hash.furthest2 + hash.ls);
+            hash.writeResults("Results for size = 15707" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions2 + hash.ls +
+                              "Furthest Collision: " + hash.furthest2 + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable3, hash.size3); 
@@ -124,6 +149,10 @@ public class LinearProbingHash
             System.out.println("Hash time 17111 " + hash.timer.reportTimes() + hash.ls); 
             System.out.println("Collisions " + hash.collisions3 + hash.ls); 
             System.out.println("furthest" + hash.furthest3 + hash.ls); 
+            hash.writeResults("Results for size = 17111" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions3 + hash.ls +
+                              "Furthest Collision: " + hash.furthest3 + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable4, hash.size4); 
@@ -133,6 +162,10 @@ public class LinearProbingHash
             System.out.println("Hash time 25111" + hash.timer.reportTimes() + hash.ls); 
             System.out.println("Collisions " + hash.collisions4 + hash.ls); 
             System.out.println("furthest" + hash.furthest4 + hash.ls); 
+            hash.writeResults("Results for size = 25111" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions4 + hash.ls +
+                              "Furthest Collision: " + hash.furthest4 + hash.ls + hash.ls); 
             
         }catch(Exception ex){
             System.out.println("Exception occurred"); 

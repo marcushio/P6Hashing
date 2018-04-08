@@ -15,7 +15,8 @@ public class ChainHash
     
     Timer timer; 
     InputGetter keyboard; 
-    String filename; 
+    String inputFilename; 
+    String outputFilename; 
     
     LinkedList[] hashTable1; 
     LinkedList longestChain1; 
@@ -51,7 +52,9 @@ public class ChainHash
         hashTable3 = new LinkedList[17111]; 
         hashTable4 = new LinkedList[25111]; 
         System.out.println("Enter a .txt filename you wish to hash"); 
-        filename = keyboard.takeInput(); 
+        inputFilename = keyboard.takeInput(); 
+        System.out.println("Enter the name of the file you want to write results to"); 
+        outputFilename = keyboard.takeInput(); 
     }
     
     
@@ -64,7 +67,7 @@ public class ChainHash
         longestChain = new LinkedList(); 
         longestChainLocation = 0; 
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            BufferedReader reader = new BufferedReader(new FileReader(inputFilename));
             String docLine = null; 
             
             while((docLine = reader.readLine()) != null){
@@ -93,6 +96,18 @@ public class ChainHash
     
     
     /**
+     * 
+     */
+    private void writeResults(String results){
+        
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outputFilename), true))){
+            writer.write(results); 
+        }catch(Exception ex){
+            System.out.println("couldn't write results"); 
+        }
+    }
+    
+    /**
      * main method
      */
     public static void main(String[] args){
@@ -109,6 +124,11 @@ public class ChainHash
             System.out.println("Collisions " + hash.collisions1 + hash.ls); 
             System.out.println("Longest chain index" + hash.longestChainLocation1 + hash.ls);
             System.out.println("Longest chain length" + hash.longestChain1.size()); 
+            hash.writeResults("Results for size = 11000" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() +  hash.ls +
+                              "Collisions: " + hash.collisions1 + hash.ls +
+                              "Longest chain index: " + hash.longestChainLocation1 + hash.ls +
+                              "Longest chain length: " + hash.longestChain1.size() + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable2); 
@@ -120,6 +140,11 @@ public class ChainHash
             System.out.println("Collisions " + hash.collisions2 + hash.ls); 
             System.out.println("Longest chain index" + hash.longestChainLocation2 + hash.ls);
             System.out.println("Longest chain length" + hash.longestChain2.size()); 
+            hash.writeResults("Results for size = 15707" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions2 + hash.ls +
+                              "Longest chain index: " + hash.longestChainLocation2 + hash.ls +
+                              "Longest chain length: " + hash.longestChain2.size() + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable3); 
@@ -131,6 +156,11 @@ public class ChainHash
             System.out.println("Collisions " + hash.collisions3 + hash.ls); 
             System.out.println("Longest chain index" + hash.longestChainLocation3 + hash.ls);
             System.out.println("Longest chain length" + hash.longestChain3.size()); 
+            hash.writeResults("Results for size = 17111" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions3 + hash.ls +
+                              "Longest chain index: " + hash.longestChainLocation3 + hash.ls +
+                              "Longest chain length: " + hash.longestChain3.size() + hash.ls + hash.ls); 
             
             hash.timer.start(); 
             hash.hash(hash.hashTable4); 
@@ -142,6 +172,11 @@ public class ChainHash
             System.out.println("Collisions " + hash.collisions4 + hash.ls); 
             System.out.println("Longest chain index" + hash.longestChainLocation4 + hash.ls);
             System.out.println("Longest chain length" + hash.longestChain4.size()); 
+            hash.writeResults("Results for size = 25111" + hash.ls + 
+                              "Time to Hash: " + hash.timer.reportTimes() + hash.ls +
+                              "Collisions: " + hash.collisions4 + hash.ls +
+                              "Longest chain index: " + hash.longestChainLocation4 + hash.ls +
+                              "Longest chain length: " + hash.longestChain4.size() + hash.ls + hash.ls); 
           
         }catch(Exception ex){
             System.out.println("Problem with file reading"); 
