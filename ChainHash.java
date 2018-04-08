@@ -89,6 +89,7 @@ public class ChainHash
             reader.close(); 
         }catch(NumberFormatException ex){
             System.out.println("Error: Non numeric characters"); 
+            writeResults("Error: non numeric characters in file (hash invalid)" + ls); 
         }catch(IOException ex){
             System.out.println("IO Error"); 
         }
@@ -178,6 +179,9 @@ public class ChainHash
                               "Longest chain index: " + hash.longestChainLocation4 + hash.ls +
                               "Longest chain length: " + hash.longestChain4.size() + hash.ls + hash.ls); 
           
+        }catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("hashes to index out of bounds"); 
+            hash.writeResults("Hashes to and index out of bounds"); 
         }catch(Exception ex){
             System.out.println("Problem with file reading"); 
         }

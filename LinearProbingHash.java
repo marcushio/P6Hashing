@@ -48,12 +48,15 @@ public class LinearProbingHash
     public LinearProbingHash(){
         keyboard = new InputGetter(); 
         timer = new Timer(); 
+    
         hashTable1 = new Integer[size1]; 
         hashTable2 = new Integer[size2]; 
         hashTable3 = new Integer[size3]; 
         hashTable4 = new Integer[size4]; 
+        
         System.out.println("Enter a .txt filename you wish to hash"); 
         inputFilename = keyboard.takeInput(); 
+        
         System.out.println("Enter the name of the file you want to write results to"); 
         outputFilename = keyboard.takeInput(); 
     }
@@ -62,9 +65,10 @@ public class LinearProbingHash
     /**
      * Hash
      */
-    private void hash(Integer[] hashTable, int size){
+    private void hash(Integer[] hashTable, int size) throws FullTableException{
         totalCollisions = 0; 
         furthest = 0; 
+        int tours = 0; 
         try{
             BufferedReader reader = new BufferedReader(new FileReader(inputFilename));
             String docLine = null; 
@@ -79,9 +83,13 @@ public class LinearProbingHash
                     hashCode++; 
                     if(hashCode == size){
                         hashCode = 0; 
+                        tours++; 
                     }
                     if(keyCollisions > furthest){
                         furthest = keyCollisions; 
+                    }
+                    if(tours == 2){
+                        throw new FullTableException("No available open addresses"); 
                     }
                 }   
                 hashTable[hashCode] = key; 
@@ -89,6 +97,7 @@ public class LinearProbingHash
             reader.close(); 
         }catch(NumberFormatException ex){
             System.out.println("Error: Non numeric characters"); 
+            writeResults("Error: non numeric characters in file (hash invalid)" + ls); 
         }catch(IOException ex){
             System.out.println("IO Error"); 
         }
@@ -98,8 +107,7 @@ public class LinearProbingHash
     /**
      * 
      */
-    private void writeResults(String results){
-               
+    private void writeResults(String results){      
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outputFilename), true))){
             writer.write(results); 
         }catch(Exception ex){
@@ -107,6 +115,20 @@ public class LinearProbingHash
         }
     }
     
+    
+    /**
+     * 
+     */
+    private class FullTableException extends Throwable{
+        String errorMessage; 
+        private FullTableException(String errorMessage){
+            this.errorMessage = errorMessage; 
+        }
+        
+        public String toString(){
+            return errorMessage; 
+        }
+    }
     
     /**
      * 
@@ -167,6 +189,12 @@ public class LinearProbingHash
                               "Collisions: " + hash.collisions4 + hash.ls +
                               "Furthest Collision: " + hash.furthest4 + hash.ls + hash.ls); 
             
+        }catch(FullTableException ex){
+            System.out.println("Error: no open addresses"); 
+            hash.writeResults("Error: no open addresses (invalid hash)"); 
+        } catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("Hashes to an index out of bounds, try a different table size next time"); 
+            hash.writeResults("Error: Hashes to an index out of bounds"); 
         }catch(Exception ex){
             System.out.println("Exception occurred"); 
         }
