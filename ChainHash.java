@@ -1,8 +1,9 @@
 
 /**
  * @author Marcus Trujillo
- * Assignment Number: 
- * Description of program if main/ class otherwise 
+ * Assignment Number: 6
+ * Takes a .txt file full of int keys and hashes them into a table. Collisions are handled through
+ * seperate chaining. For this assignment there were four different table sizes. 
  * 
  * CS2050-003
  * 
@@ -10,26 +11,30 @@
 import java.io.*;
 import java.util.Scanner; 
 import java.util.LinkedList; 
+
 public class ChainHash
 {
-    
     Timer timer; 
     InputGetter keyboard; 
     String inputFilename; 
     String outputFilename; 
+    String ls = System.lineSeparator(); 
     
     LinkedList[] hashTable1; 
     LinkedList longestChain1; 
     int longestChainLocation1; 
     int collisions1; 
+    
     LinkedList[] hashTable2;
     LinkedList longestChain2; 
     int longestChainLocation2; 
     int collisions2; 
+    
     LinkedList[] hashTable3;
     LinkedList longestChain3; 
     int longestChainLocation3; 
     int collisions3; 
+    
     LinkedList[] hashTable4;  
     LinkedList longestChain4; 
     int longestChainLocation4; 
@@ -37,22 +42,24 @@ public class ChainHash
     
     LinkedList longestChain;
     int longestChainLocation; 
-    int collisions; 
-    
-    String ls = System.lineSeparator(); 
+    int collisions;
     
     /**
-     * Constructor
+     * Instantiates all four tables that we're going to fill with keys. Also takes the filenames 
+     * needed from the user. 
      */
     public ChainHash(){
         keyboard = new InputGetter(); 
         timer = new Timer(); 
+        
         hashTable1 = new LinkedList[11000]; 
         hashTable2 = new LinkedList[15707]; 
         hashTable3 = new LinkedList[17111]; 
         hashTable4 = new LinkedList[25111]; 
+        
         System.out.println("Enter a .txt filename you wish to hash"); 
         inputFilename = keyboard.takeInput(); 
+        
         System.out.println("Enter the name of the file you want to write results to"); 
         outputFilename = keyboard.takeInput(); 
     }
@@ -97,10 +104,9 @@ public class ChainHash
     
     
     /**
-     * 
+     * Writes the results to a text file the user chose. 
      */
     private void writeResults(String results){
-        
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outputFilename), true))){
             writer.write(results); 
         }catch(Exception ex){
@@ -109,7 +115,7 @@ public class ChainHash
     }
     
     /**
-     * main method
+     * main method that runs the hash function for all tables. 
      */
     public static void main(String[] args){
         ChainHash hash = new ChainHash(); 
@@ -185,6 +191,5 @@ public class ChainHash
         }catch(Exception ex){
             System.out.println("Problem with file reading"); 
         }
-        
     }
 }

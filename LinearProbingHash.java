@@ -2,7 +2,8 @@
 /**
  * @author Marcus Trujillo
  * Assignment Number: 
- * Description of program if main/ class otherwise 
+ * Takes a .txt file full of int keys and hashes them into a table. Collisions are handled through
+ * linear probing. For this assignment there were four different table sizes. 
  * 
  * CS2050-003
  * 
@@ -43,7 +44,8 @@ public class LinearProbingHash
     String ls = System.lineSeparator(); 
     
     /**
-     * 
+     * Instantiates all the tables that are going to be filled. Also takes the filenames the user 
+     * will want to read from and write to. 
      */
     public LinearProbingHash(){
         keyboard = new InputGetter(); 
@@ -63,7 +65,7 @@ public class LinearProbingHash
     
     
     /**
-     * Hash
+     * Fills the hashtable from the file the user chose. 
      */
     private void hash(Integer[] hashTable, int size) throws FullTableException{
         totalCollisions = 0; 
@@ -105,7 +107,7 @@ public class LinearProbingHash
     
     
     /**
-     * 
+     * Write the results to a file of the user's choosing. 
      */
     private void writeResults(String results){      
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outputFilename), true))){
@@ -117,7 +119,7 @@ public class LinearProbingHash
     
     
     /**
-     * 
+     * My own exception class that is used if the there is no available addresses in the hash table. 
      */
     private class FullTableException extends Throwable{
         String errorMessage; 
@@ -131,7 +133,7 @@ public class LinearProbingHash
     }
     
     /**
-     * 
+     * Calls the hash function to fill all the tables. 
      */
     public static void main(String[] args){
         LinearProbingHash hash = new LinearProbingHash(); 
